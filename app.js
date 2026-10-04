@@ -187,7 +187,13 @@ async function main() {
 
   document.title = data.site.title;
   document.getElementById("site-title").textContent = data.site.title;
-  document.getElementById("site-tagline").textContent = data.site.tagline;
+  // 标语留空就整行不显示 —— 空 <p> 会白白撑出一段间距
+  const tagline = document.getElementById("site-tagline");
+  if (data.site.tagline) {
+    tagline.textContent = data.site.tagline;
+  } else {
+    tagline.remove();
+  }
   const qq = document.getElementById("qq-link");
   qq.textContent = data.site.qq;
   qq.href = "https://qm.qq.com/q/" + data.site.qq;

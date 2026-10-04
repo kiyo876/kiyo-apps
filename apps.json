@@ -1,7 +1,7 @@
 {
   "site": {
     "title": "kiyo 应用合集",
-    "tagline": "自己写的小工具",
+    "tagline": "",
     "author": "kiyo",
     "qq": "1127879062",
     "qface": "૮₍◜ෆ◝.₎ა"
@@ -26,10 +26,10 @@
             "记得进度 · 退出应用再进来，接着上次的位置放"
           ],
           "shots": [
-            { "src": "assets/shot-home.png", "caption": "首页" },
-            { "src": "assets/shot-donate.png", "caption": "捐赠页" }
+            { "src": "assets/shot-feed.png", "caption": "刷视频" },
+            { "src": "assets/shot-chart.png", "caption": "榜单" },
+            { "src": "assets/shot-search.png", "caption": "搜索" }
           ],
-          "notice": "只支持安卓手表（Wear OS / 安卓 8.0 以上的表都行）。手机上装不了。",
           "release": {
             "repo": "kiyo876/kiyomusic-watch-releases",
             "manifest": "version.json",
