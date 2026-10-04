@@ -13,6 +13,19 @@
 
 const SOURCE_TIMEOUT_MS = 6000;
 
+/**
+ * 国内加速通道。
+ *
+ * 为什么需要它:安装包托管在 GitHub 上, 国内直连实测只有 50~150 KB/s,
+ * 30MB 要下五分钟以上, 还容易断;挂上这个前缀后实测 3.5 MB/s, 9 秒下完。
+ *
+ * ⚠️ 它是**第三方转发**:文件会经过别人的服务器。所以页面上同时给出
+ * 官方直连和 SHA-256 —— 文件本身按哈希核对过是一致的, 谁不放心可以自己验,
+ * 或者点官方那条(慢, 但不过第三方)。
+ * 要是哪天这个通道挂了, 换掉下面这一行就行;官方按钮不受影响。
+ */
+const MIRROR_PREFIX = "https://gh-proxy.com/";
+
 /** 同一份清单问三个来源, 谁给的版本号最高用谁 —— 和手表端同一套策略。 */
 function manifestUrls(repo, file) {
   return [
@@ -78,11 +91,17 @@ function renderApp(app) {
   card.appendChild(el("p", "app-summary", app.summary));
 
   const actions = el("div", "actions");
-  const download = el("a", "btn", "下载 APK");
+
+  // 国内加速下载放主按钮:访客绝大多数在国内, 官方直连那条慢得多。
+  const fast = el("a", "btn", "下载 APK");
+  fast.dataset.role = "download-fast";
+  actions.appendChild(fast);
+
+  const download = el("a", "btn btn-ghost", "官方直连");
   download.dataset.role = "download";
   actions.appendChild(download);
 
-  const copy = el("button", "btn btn-ghost", "复制下载链接");
+  const copy = el("button", "btn btn-ghost", "复制官方链接");
   copy.type = "button";
   copy.addEventListener("click", async () => {
     const link = download.href;
@@ -94,7 +113,7 @@ function renderApp(app) {
       window.prompt("复制这个链接:", link);
       copy.textContent = "已复制";
     }
-    setTimeout(() => { copy.textContent = "复制下载链接"; }, 1800);
+    setTimeout(() => { copy.textContent = "复制官方链接"; }, 1800);
   });
   actions.appendChild(copy);
 
@@ -103,11 +122,12 @@ function renderApp(app) {
   actions.appendChild(version);
   card.appendChild(actions);
 
-  // 这句必须留着:安装包放在 GitHub 上, 国内偶尔连不上 ——
-  // 不写清楚的话, 用户下到一半失败会以为网站坏了。
-  card.appendChild(
-    el("p", "hint", "下载慢或失败就多试一次。安装包托管在 GitHub 上，国内网络偶尔会抽风。")
-  );
+  // 校验值摆在按钮下面:走第三方加速通道时, 这是唯一能自己核对的办法。
+  const sha = el("p", "sha");
+  sha.dataset.role = "sha";
+  card.appendChild(sha);
+
+  card.appendChild(el("p", "hint", "下载失败就换另一个按钮试试，或者加群找我要。"));
 
   const notes = el("p", "notes");
   notes.dataset.role = "notes";
@@ -143,14 +163,18 @@ function renderApp(app) {
 async function applyLatestVersion(card, app) {
   const badge = card.querySelector('[data-role="version-badge"]');
   const link = card.querySelector('[data-role="download"]');
+  const fast = card.querySelector('[data-role="download-fast"]');
   const text = card.querySelector('[data-role="version-text"]');
   const notes = card.querySelector('[data-role="notes"]');
+  const sha = card.querySelector('[data-role="sha"]');
 
   // 先按 fallback 摆好, 保证"就算一个来源都不通, 下载按钮也能用"
   const fallback = app.release.fallback;
   link.href = fallback.apkUrl;
   link.setAttribute("download", "");
+  fast.href = MIRROR_PREFIX + fallback.apkUrl;
   badge.textContent = "v" + fallback.versionName;
+  sha.textContent = fallback.sha256 ? "SHA-256 " + fallback.sha256 : "";
 
   const latest = await fetchLatest(app);
   if (!latest) {
@@ -160,7 +184,9 @@ async function applyLatestVersion(card, app) {
   }
 
   link.href = latest.apkUrl;
+  fast.href = MIRROR_PREFIX + latest.apkUrl;
   badge.textContent = "v" + latest.versionName;
+  sha.textContent = latest.sha256 ? "SHA-256 " + latest.sha256 : "";
   text.className = "version fresh";
   text.textContent = "已是最新（" + new Date().toLocaleString("zh-CN", {
     month: "numeric", day: "numeric", hour: "2-digit", minute: "2-digit",
