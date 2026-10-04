@@ -294,6 +294,46 @@ footer {
 footer a { color: var(--pink); text-decoration: none; }
 footer a:hover { text-decoration: underline; }
 
+/* ── 页脚捐赠区 ── */
+
+.donate {
+  margin-top: 34px;
+}
+
+.donate-panel {
+  margin-top: 18px;
+}
+
+.donate-line {
+  margin: 0 0 16px;
+  color: var(--pink);
+  font-size: 15px;
+  font-weight: 600;
+}
+
+.donate-qrs {
+  display: flex;
+  justify-content: center;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+
+.donate-qrs figure { margin: 0; text-align: center; }
+
+.donate-qrs img {
+  width: 170px;
+  height: 170px;
+  border-radius: 14px;
+  background: #fff;
+  padding: 6px;
+}
+
+.donate-qrs figcaption {
+  margin-top: 8px;
+  font-size: 13px;
+  color: var(--text-2);
+}
+
 .dim { color: var(--text-3); font-size: 13px; }
 
 .warn { color: #ffce6a; }

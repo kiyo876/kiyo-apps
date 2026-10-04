@@ -4,7 +4,15 @@
     "tagline": "",
     "author": "kiyo",
     "qq": "1127879062",
-    "qface": "૮₍◜ෆ◝.₎ა"
+    "qface": "૮₍◜ෆ◝.₎ა",
+    "donate": {
+      "line": "感谢你拯救一名高中牲开发者干瘪的钱包",
+      "note": "打赏全凭自愿，不打赏功能也一个不少。",
+      "qrs": [
+        { "src": "assets/donate-wechat.png", "label": "微信" },
+        { "src": "assets/donate-alipay.png", "label": "支付宝" }
+      ]
+    }
   },
   "categories": [
     {

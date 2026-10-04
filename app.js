@@ -225,6 +225,8 @@ async function main() {
   qq.href = "https://qm.qq.com/q/" + data.site.qq;
   document.getElementById("qface").textContent = data.site.qface;
 
+  renderDonate(data.site.donate);
+
   const tasks = [];
   data.categories.forEach((category) => {
     const section = el("section", "category");
@@ -241,3 +243,40 @@ async function main() {
 }
 
 main();
+
+/**
+ * 页脚的捐赠区。
+ *
+ * 收起时只有一个按钮 —— 页面主体是应用介绍, 不该一进来就被要钱;
+ * 展开后才显示两张收款码。收款码是手表应用里那两张原图(带白边),
+ * 手机上直接扫就行。
+ */
+function renderDonate(donate) {
+  const section = document.getElementById("donate");
+  if (!donate || !donate.qrs || !donate.qrs.length) return;
+
+  section.hidden = false;
+
+  const toggle = document.getElementById("donate-toggle");
+  const panel = document.getElementById("donate-panel");
+  document.getElementById("donate-line").textContent = donate.line || "";
+  document.getElementById("donate-note").textContent = donate.note || "";
+
+  const qrs = document.getElementById("donate-qrs");
+  donate.qrs.forEach((qr) => {
+    const fig = el("figure");
+    const img = el("img");
+    img.src = qr.src;
+    img.alt = qr.label + "收款码";
+    img.loading = "lazy";
+    fig.appendChild(img);
+    fig.appendChild(el("figcaption", null, qr.label));
+    qrs.appendChild(fig);
+  });
+
+  toggle.addEventListener("click", () => {
+    const open = panel.hidden;
+    panel.hidden = !open;
+    toggle.textContent = open ? "收起" : "捐赠";
+  });
+}
