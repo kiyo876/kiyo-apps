@@ -1,0 +1,292 @@
+/* ---------------------------------------------------------------
+   kiyo 应用合集 —— 样式
+
+   刻意不用任何外链(字体、图标库、CDN 都不引):
+   访问者大多在国内,少一个外链就少一个打不开的地方。
+   字体走系统栈,图标直接用 emoji 和 CSS 画。
+   --------------------------------------------------------------- */
+
+:root {
+  --pink: #ff7aa8;
+  --pink-soft: rgba(255, 122, 168, 0.14);
+  --bg: #08070a;
+  --surface: #141117;
+  --surface-2: #1c1820;
+  --line: #29232c;
+  --text: #f0e7ec;
+  --text-2: #b9aab3;
+  --text-3: #8b7f88;
+}
+
+* { box-sizing: border-box; }
+
+html { -webkit-text-size-adjust: 100%; }
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: system-ui, -apple-system, "PingFang SC", "Microsoft YaHei", "Noto Sans SC", sans-serif;
+  line-height: 1.65;
+  -webkit-font-smoothing: antialiased;
+}
+
+.wrap {
+  max-width: 760px;
+  margin: 0 auto;
+  padding: 0 20px;
+}
+
+/* ── 头部 ── */
+
+.hero {
+  position: relative;
+  padding: 72px 0 40px;
+  overflow: hidden;
+}
+
+.hero .glow {
+  position: absolute;
+  top: -260px;
+  left: 50%;
+  width: 620px;
+  height: 620px;
+  margin-left: -310px;
+  background: radial-gradient(circle, rgba(255, 122, 168, 0.22), transparent 62%);
+  pointer-events: none;
+}
+
+.hero h1 {
+  position: relative;
+  margin: 0;
+  font-size: 34px;
+  letter-spacing: 0.5px;
+}
+
+.tagline {
+  position: relative;
+  margin: 8px 0 0;
+  color: var(--text-2);
+  font-size: 15px;
+}
+
+/* ── 分类 ── */
+
+.category { margin: 8px 0 44px; }
+
+.category > h2 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin: 0 0 16px;
+  font-size: 17px;
+  font-weight: 600;
+}
+
+.category > h2::after {
+  content: "";
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+
+/* ── 应用卡 ── */
+
+.app {
+  background: linear-gradient(180deg, var(--surface-2), var(--surface));
+  border: 1px solid var(--line);
+  border-radius: 18px;
+  padding: 20px;
+  margin-bottom: 18px;
+}
+
+.app-head {
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+}
+
+.app-icon {
+  width: 72px;
+  height: 72px;
+  border-radius: 20px;
+  flex: 0 0 auto;
+  background: var(--surface);
+  object-fit: cover;
+}
+
+.app-title { margin: 0; font-size: 21px; }
+
+.app-meta {
+  margin: 4px 0 0;
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.badge {
+  display: inline-block;
+  margin-left: 8px;
+  padding: 1px 9px;
+  border-radius: 999px;
+  background: var(--pink-soft);
+  color: var(--pink);
+  font-size: 12px;
+  white-space: nowrap;
+}
+
+.app-summary {
+  margin: 16px 0 0;
+  color: var(--text-2);
+  font-size: 15px;
+}
+
+/* ── 下载区 ── */
+
+.actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 18px;
+}
+
+.btn {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 11px 22px;
+  border: 0;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #ff8fb6, #ff6f9f);
+  color: #3a0018;
+  font-size: 15px;
+  font-weight: 700;
+  text-decoration: none;
+  cursor: pointer;
+  transition: transform 0.12s ease, filter 0.12s ease;
+}
+
+.btn:hover { filter: brightness(1.06); }
+.btn:active { transform: scale(0.97); }
+
+.btn-ghost {
+  background: transparent;
+  border: 1px solid var(--line);
+  color: var(--text-2);
+  font-weight: 500;
+  padding: 10px 18px;
+  font-size: 14px;
+}
+
+.btn-ghost:hover { color: var(--text); border-color: var(--pink); }
+
+.version {
+  font-size: 13px;
+  color: var(--text-3);
+}
+
+.version.checking { color: var(--text-3); }
+.version.fresh { color: #7be0a8; }
+.version.stale { color: #ffce6a; }
+
+.notes {
+  margin: 14px 0 0;
+  padding: 12px 14px;
+  border-left: 2px solid var(--pink);
+  background: rgba(255, 255, 255, 0.03);
+  border-radius: 0 10px 10px 0;
+  color: var(--text-2);
+  font-size: 14px;
+  white-space: pre-wrap;
+}
+
+.notes .label {
+  display: block;
+  margin-bottom: 2px;
+  color: var(--text-3);
+  font-size: 12px;
+}
+
+/* ── 详情 ── */
+
+.highlights {
+  margin: 20px 0 0;
+  padding: 0;
+  list-style: none;
+}
+
+.highlights li {
+  position: relative;
+  padding-left: 20px;
+  margin-bottom: 7px;
+  color: var(--text-2);
+  font-size: 14px;
+}
+
+.highlights li::before {
+  content: "";
+  position: absolute;
+  left: 4px;
+  top: 11px;
+  width: 5px;
+  height: 5px;
+  border-radius: 50%;
+  background: var(--pink);
+}
+
+.shots {
+  display: flex;
+  gap: 14px;
+  margin-top: 20px;
+  overflow-x: auto;
+  padding-bottom: 6px;
+}
+
+.shots figure { margin: 0; flex: 0 0 auto; text-align: center; }
+
+.shots img {
+  width: 150px;
+  height: 150px;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  background: #000;
+}
+
+.shots figcaption {
+  margin-top: 6px;
+  font-size: 12px;
+  color: var(--text-3);
+}
+
+.notice {
+  margin: 18px 0 0;
+  padding: 10px 14px;
+  border-radius: 12px;
+  background: rgba(255, 206, 106, 0.09);
+  color: #ffce6a;
+  font-size: 13px;
+}
+
+/* ── 页脚 ── */
+
+footer {
+  padding: 30px 20px 60px;
+  color: var(--text-2);
+  font-size: 14px;
+  text-align: center;
+}
+
+footer a { color: var(--pink); text-decoration: none; }
+footer a:hover { text-decoration: underline; }
+
+.dim { color: var(--text-3); font-size: 13px; }
+
+.warn { color: #ffce6a; }
+
+@media (max-width: 520px) {
+  .hero { padding: 52px 0 28px; }
+  .hero h1 { font-size: 27px; }
+  .app { padding: 16px; }
+  .app-icon { width: 60px; height: 60px; border-radius: 16px; }
+  .app-title { font-size: 19px; }
+}

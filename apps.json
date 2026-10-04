@@ -1,0 +1,47 @@
+{
+  "site": {
+    "title": "kiyo 应用合集",
+    "tagline": "自己写的小工具，都免费",
+    "author": "kiyo",
+    "qq": "1127879062",
+    "qface": "૮₍◜ෆ◝.₎ა"
+  },
+  "categories": [
+    {
+      "id": "music",
+      "name": "音乐",
+      "apps": [
+        {
+          "id": "kiyomusic",
+          "name": "kiyomusic",
+          "icon": "assets/kiyomusic-icon.png",
+          "platform": "安卓手表",
+          "tagline": "手表上的免费音乐播放器",
+          "summary": "网易云、B站、酷我三个音源都能搜、能听、能下载，不用登录。要会员的歌会自动换到能免费听完整版的音源。",
+          "highlights": [
+            "搜索 & 榜单 · 三个音源分别搜，热歌榜点开就听",
+            "刷音乐 · 竖屏滑 MV，一条接一条",
+            "免费下载 · 选格式、存歌词封面、断点续传",
+            "歌词 · 逐字、翻译、音译都有",
+            "记得进度 · 退出应用再进来，接着上次的位置放"
+          ],
+          "shots": [
+            { "src": "assets/shot-home.png", "caption": "首页" },
+            { "src": "assets/shot-donate.png", "caption": "捐赠页" }
+          ],
+          "notice": "只支持安卓手表（Wear OS / 安卓 8.0 以上的表都行）。手机上装不了。",
+          "release": {
+            "repo": "kiyo876/kiyomusic-watch-releases",
+            "manifest": "version.json",
+            "fallback": {
+              "versionName": "1.0.1",
+              "versionCode": 2,
+              "apkUrl": "https://raw.githubusercontent.com/kiyo876/kiyomusic-watch-releases/main/apk/kiyowatch-1.0.1.apk",
+              "sha256": "7ac6c831a59c62fd9fb45b97b1cc84e491f2dafc5c573d405930aaab8ab520c3"
+            }
+          }
+        }
+      ]
+    }
+  ]
+}

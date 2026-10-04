@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>kiyo 应用合集</title>
+<meta name="description" content="kiyo 自己写的小工具合集，都免费。第一个是手表上的音乐播放器 kiyomusic。">
+<link rel="icon" href="assets/kiyomusic-icon.png">
+<link rel="stylesheet" href="style.css">
+</head>
+<body>
+
+<header class="hero">
+  <div class="glow" aria-hidden="true"></div>
+  <div class="wrap">
+    <h1 id="site-title">kiyo 应用合集</h1>
+    <p class="tagline" id="site-tagline">自己写的小工具，都免费</p>
+  </div>
+</header>
+
+<main class="wrap" id="catalog">
+  <!-- 由 app.js 按 apps.json 渲染 -->
+  <noscript>
+    <p class="warn">这个页面需要 JavaScript 才能显示应用列表。</p>
+  </noscript>
+</main>
+
+<footer class="wrap">
+  <p>
+    有问题或者想要新功能，加 QQ 群
+    <a id="qq-link" href="#">—</a>
+    <span id="qface"></span>
+  </p>
+  <p class="dim">页面上的版本号是打开时现从 GitHub 取的，所以你看到的就是最新版。</p>
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>
