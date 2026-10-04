@@ -103,6 +103,12 @@ function renderApp(app) {
   actions.appendChild(version);
   card.appendChild(actions);
 
+  // 这句必须留着:安装包放在 GitHub 上, 国内偶尔连不上 ——
+  // 不写清楚的话, 用户下到一半失败会以为网站坏了。
+  card.appendChild(
+    el("p", "hint", "下载慢或失败就多试一次。安装包托管在 GitHub 上，国内网络偶尔会抽风。")
+  );
+
   const notes = el("p", "notes");
   notes.dataset.role = "notes";
   notes.hidden = true;
