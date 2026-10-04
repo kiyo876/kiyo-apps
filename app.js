@@ -200,14 +200,32 @@ async function applyLatestVersion(card, app) {
   }
 }
 
+/**
+ * 取应用列表。
+ *
+ * 取两次再放弃 —— 踩过一次:发新版那一刻 Pages 正在重建,
+ * 那一小会儿 apps.json 会短暂取不到, 用户刚好刷新就只看到一个"读取失败"。
+ * 等一下再试一次, 这种情况就自愈了。
+ * 带 ?t= 是为了绕开浏览器缓存, 免得发新版后还拿到旧的列表。
+ */
+async function loadApps() {
+  for (let attempt = 0; attempt < 2; attempt++) {
+    try {
+      const res = await fetch("apps.json?t=" + Date.now(), { cache: "no-store" });
+      if (res.ok) return await res.json();
+    } catch (error) {
+      // 这一次没成, 走下面等一等再试
+    }
+    if (attempt === 0) await new Promise((done) => setTimeout(done, 900));
+  }
+  return null;
+}
+
 async function main() {
   const catalog = document.getElementById("catalog");
-  let data;
-  try {
-    const res = await fetch("apps.json", { cache: "no-store" });
-    data = await res.json();
-  } catch (error) {
-    catalog.appendChild(el("p", "warn", "应用列表读取失败，刷新一下试试。"));
+  const data = await loadApps();
+  if (!data) {
+    catalog.appendChild(el("p", "warn", "应用列表没取到，刷新一下试试。"));
     return;
   }
 
@@ -225,8 +243,6 @@ async function main() {
   qq.href = "https://qm.qq.com/q/" + data.site.qq;
   document.getElementById("qface").textContent = data.site.qface;
 
-  renderDonate(data.site.donate);
-
   const tasks = [];
   data.categories.forEach((category) => {
     const section = el("section", "category");
@@ -240,6 +256,14 @@ async function main() {
   });
 
   await Promise.all(tasks);
+
+  // 捐赠区放最后渲染, 而且单独包一层:
+  // 它是附加内容, 万一出错绝不能连累上面已经渲染好的应用列表。
+  try {
+    renderDonate(data.site.donate);
+  } catch (error) {
+    // 静默:没有捐赠区也能用
+  }
 }
 
 main();
